@@ -1,0 +1,80 @@
+<%- include("../partials/header") %>
+
+
+<div class="container">
+	
+<div class="row">
+	
+	
+	<div class="col-md-3">
+	     <p class="lead"> yelp camp</p>
+	     <div class="list-group">
+			<li class="list-group-item active">info 1</li>
+			<li class="list-group-item">info 2</li>
+			<li class="list-group-item">info 3</li>
+        </div>
+    </div>
+		
+		
+	     <div class="col-md-9">
+			 
+		    <div class="thumbnail">
+			<p>submitted by <%=foundCampground.author.username%></p>	
+			<img class="img-responsive" src="<%=foundCampground.image%>">
+	        <div class="caption-full">
+				<h4 class="pull-right">$10.00</h4>
+				<h4><a><%=foundCampground.name%></a></h4>
+                <p><%=foundCampground.description%></p>
+				
+				<% if( currentUser && foundCampground.author.id.equals(currentUser._id)){ %>
+				<a class="btn btn-md btn-warning" href="/campgrounds/<%=foundCampground._id%>/edit">Edit</a>
+				
+				<form class="delete-form" action="/campgrounds/<%=foundCampground._id%>?_method=DELETE" method="POST">
+					<button class="btn btn-md btn-danger">Delete</button>
+				</form>
+				<% } %>
+				
+			</div>
+			</div>
+			 
+			 <div class="well">
+				 
+	 <div class="text-right">
+			<a class="btn btn-lg btn-success" href="/campgrounds/<%=foundCampground._id%>/comment/new">ADD NEW COMMENT</a>
+     </div>
+			
+				 <hr>
+			<% foundCampground.comments.forEach(function(comment){ %>
+	 
+			<div class="row">
+				<div class="col-md-12">
+					<p> <strong><%=comment.author.username %></strong></p>
+					<span class="pull-right">10 days ago</span>
+					<p><%= comment.text %></p>
+					
+<% if( currentUser && comment.author.id.equals(currentUser._id)){ %>
+				
+<a class="btn btn-sm btn-warning" href="/campgrounds/<%=foundCampground.id%>/comments/<%=comment._id%>/edit">Edit</a>                                                           
+		<form class="delete-form" action="/campgrounds/<%=foundCampground.id%>/comments/<%=comment._id%>?_method=DELETE" method="POST">
+			  <input type="submit" class="btn btn-danger btn-sm "  value="delete" >	</form>
+					<% } %>
+	             	
+                 </div>
+			 </div>	 
+			<% }) %>
+			 
+			 
+			 
+			 
+			 </div>
+		</div>
+	</div>
+</div>
+
+ 
+ 
+  
+
+ 
+
+<%- include("../partials/footer") %>
